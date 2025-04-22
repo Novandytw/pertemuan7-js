@@ -1,0 +1,176 @@
+<!DOCTYPE html> <!-- no1-7 -->
+<html lang="id">
+<head>
+      font-family: A 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Praktikum JavaScript - Modul 7</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {rial, sans-serif;
+      background-color: #f3f4f6;
+    }
+    section {
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+    .error {
+      color: red;
+      font-size: 0.875rem;
+      display: none;
+    }
+    #clock {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #1f2937;
+    }
+  </style>
+</head>
+<body class="min-h-screen py-6">
+  <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Praktikum JavaScript - Modul 7</h1>
+
+  <!-- 1. Program Alert -->
+  <section>
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">1. Program Alert</h2>
+    <button onclick="showAlert()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Tampilkan Alert</button>
+  </section>
+
+  <!-- 2. Program Input Data -->
+  <section>
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">2. Program Input Data</h2>
+    <input type="text" id="inputName" placeholder="Masukkan nama" class="border border-gray-300 p-2 rounded w-full mb-2">
+    <button onclick="saveInput()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Simpan</button>
+    <p id="outputName" class="mt-2 text-gray-600"></p>
+  </section>
+
+  <!-- 3. Program Confirm Box -->
+  <section>
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">3. Program Confirm Box</h2>
+    <button onclick="showConfirm()" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Konfirmasi</button>
+    <p id="confirmResult" class="mt-2 text-gray-600"></p>
+  </section>
+
+  <!-- 4. Program Validasi Isian -->
+  <section>
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">4. Program Validasi Isian</h2>
+    <input type="text" id="inputValidate" placeholder="Masukkan minimal 3 karakter" class="border border-gray-300 p-2 rounded w-full mb-2">
+    <p id="validateError" class="error">Input harus minimal 3 karakter!</p>
+    <button onclick="validateInput()" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">Validasi</button>
+    <p id="validateResult" class="mt-2 text-gray-600"></p>
+  </section>
+
+  <!-- 5. Program Radio Box -->
+  <section>
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">5. Program Radio Box</h2>
+    <label class="block mb-2">
+      <input type="radio" name="color" value="Merah" checked> Merah
+    </label>
+    <label class="block mb-2">
+      <input type="radio" name="color" value="Biru"> Biru
+    </label>
+    <label class="block mb-2">
+      <input type="radio" name="color" value="Hijau"> Hijau
+    </label>
+    <button onclick="getRadioValue()" class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600">Pilih Warna</button>
+    <p id="radioResult" class="mt-2 text-gray-600"></p>
+  </section>
+  
+  <section>
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">6. Program Verifikasi Password</h2>
+    <input type="password" id="password1" placeholder="Masukkan password" class="border border-gray-300 p-2 rounded w-full mb-2">
+    <input type="password" id="password2" placeholder="Konfirmasi password" class="border border-gray-300 p-2 rounded w-full mb-2">
+    <p id="passwordError" class="error">Password tidak cocok atau kurang dari 6 karakter!</p>
+    <button onclick="verifyPassword()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Verifikasi</button>
+    <p id="passwordResult" class="mt-2 text-gray-600"></p>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">7. Program Tanggal dan Jam Real-time</h2>
+    <p id="clock" class="text-center"></p>
+  </section>
+
+  <script>
+    function showAlert() {
+      alert("Ini adalah pesan alert dari JavaScript!");
+    }
+
+    function saveInput() {
+      const name = document.getElementById("inputName").value;
+      if (name) {
+        document.getElementById("outputName").textContent = `Nama yang disimpan: ${name}`;
+      } else {
+        alert("Masukkan nama terlebih dahulu!");
+      }
+    }
+
+    function showConfirm() {
+      const result = confirm("Apakah Anda yakin ingin melanjutkan?");
+      document.getElementById("confirmResult").textContent = result
+        ? "Anda memilih OK!"
+        : "Anda memilih Cancel!";
+    }
+
+    function validateInput() {
+      const input = document.getElementById("inputValidate").value;
+      const error = document.getElementById("validateError");
+      const result = document.getElementById("validateResult");
+      if (input.length < 3) {
+        error.style.display = "block";
+        result.textContent = "";
+      } else {
+        error.style.display = "none";
+        result.textContent = `Input valid: ${input}`;
+      }
+    }
+
+    function getRadioValue() {
+      const radios = document.getElementsByName("color");
+      let selectedColor = "";
+      for (const radio of radios) {
+        if (radio.checked) {
+          selectedColor = radio.value;
+          break;
+        }
+      }
+      document.getElementById("radioResult").textContent = `Warna yang dipilih: ${selectedColor}`;
+    }
+
+    function verifyPassword() {
+      const pass1 = document.getElementById("password1").value;
+      const pass2 = document.getElementById("password2").value;
+      const error = document.getElementById("passwordError");
+      const result = document.getElementById("passwordResult");
+      if (pass1.length < 6 || pass1 !== pass2) {
+        error.style.display = "block";
+        result.textContent = "";
+      } else {
+        error.style.display = "none";
+        result.textContent = "Password valid!";
+      }
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const date = now.toLocaleDateString("id-ID", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      const time = now.toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+      document.getElementById("clock").textContent = `${date}, ${time}`;
+    }
+    setInterval(updateClock, 1000); 
+    updateClock(); 
+  </script>
+</body>
+</html>
