@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Praktikum JavaScript - Program jQuery</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- jQuery UI CDN -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      padding: 2rem;
+    }
+    section {
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+    #menu {
+      display: none;
+      list-style: none;
+      padding: 0;
+    }
+    #menu li {
+      padding: 0.5rem;
+      background-color: #e5e7eb;
+      margin-bottom: 0.25rem;
+      border-radius: 0.25rem;
+    }
+    #dialog {
+      display: none;
+    }
+    #downloadDialog {
+      display: none;
+    }
+    #progressbar {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen py-6">
+  <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Praktikum JavaScript - Program jQuery</h1>
+
+  <!-- 9. Menu dengan jQuery -->
+  <section>
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">9. Menu dengan jQuery</h2>
+    <button id="menuBtn" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Tampilkan Menu</button>
+    <ul id="menu">
+      <li>Home</li>
+      <li>About</li>
+      <li>Contact</li>
+    </ul>
+  </section>
+
+  <!-- 10. Jendela Basic Dialog dengan jQuery -->
+  <section>
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">10. Jendela Basic Dialog</h2>
+    <button id="dialogBtn" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Buka Dialog</button>
+    <div id="dialog" title="Konfirmasi">
+      <p>Apakah Anda yakin ingin melanjutkan?</p>
+    </div>
+  </section>
+
+  <!-- 11. Download Dialog dengan Progressbar -->
+  <section>
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">11. Download Dialog dengan Progressbar</h2>
+    <button id="downloadBtn" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">Mulai Unduhan</button>
+    <div id="downloadDialog" title="Mengunduh...">
+      <p>Sedang mengunduh file...</p>
+      <div id="progressbar"></div>
+    </div>
+  </section>
+
+  <script>
+    $(document).ready(function() {
+      // 9. Menu dengan jQuery
+      $("#menuBtn").click(function() {
+        $("#menu").slideToggle("fast");
+      });
+
+      // 10. Jendela Basic Dialog
+      $("#dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        buttons: {
+          "OK": function() {
+            $(this).dialog("close");
+            alert("Anda memilih OK!");
+          },
+          "Cancel": function() {
+            $(this).dialog("close");
+          }
+        }
+      });
+      $("#dialogBtn").click(function() {
+        $("#dialog").dialog("open");
+      });
+
+      // 11. Download Dialog dengan Progressbar
+      $("#progressbar").progressbar({
+        value: 0
+      });
+      $("#downloadDialog").dialog({
+        autoOpen: false,
+        modal: true,
+        buttons: {
+          "Tutup": function() {
+            $(this).dialog("close");
+          }
+        }
+      });
+      $("#downloadBtn").click(function() {
+        $("#downloadDialog").dialog("open");
+        let progress = 0;
+        const interval = setInterval(function() {
+          progress += 10;
+          $("#progressbar").progressbar("value", progress);
+          if (progress >= 100) {
+            clearInterval(interval);
+            $("#downloadDialog").dialog("option", "buttons", {
+              "Selesai": function() {
+                $(this).dialog("close");
+              }
+            });
+          }
+        }, 500);
+      });
+    });
+  </script>
+</body>
+</html>
